@@ -1,3 +1,7 @@
 module myapp
-go 1.18
-require github.com/gin-gonic/gin v1.8.1
+
+go 1.23.8
+
+replace example.com/greetings => ./greetings
+
+require example.com/greetings v0.0.0-00010101000000-000000000000
