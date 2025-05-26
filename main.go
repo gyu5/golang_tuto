@@ -1,26 +1,35 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
-	"example.com/greetings"
+	"github.com/go-sql-driver/mysql"
 )
 
+var db *sql.DB
+
 func main() {
-	log.SetPrefix("greetings: ")
-	log.SetFlags(0)
+	// Capture connection properties.
+	cfg := mysql.NewConfig()
+	cfg.User = os.Getenv("DBUSER")
+	cfg.Passwd = os.Getenv("DBPASS")
+	cfg.Net = "tcp"
+	cfg.Addr = "127.0.0.1:3306"
+	cfg.DBName = "recordings"
 
-	names := []string{
-		"Naoki",
-		"Astalum",
-	}
-	messages, err := greetings.Hellos(names)
-
+	// Get a database handle.
+	var err error
+	db, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(messages)
-
+	pingErr := db.Ping()
+	if pingErr != nil {
+		log.Fatal(pingErr)
+	}
+	fmt.Println("Connected!")
 }
