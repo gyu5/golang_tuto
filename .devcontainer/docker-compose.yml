@@ -12,21 +12,19 @@ services:
       - dev
 
   db:
-    image: postgres:16
+    image: mysql
     restart: always
     environment:
-      POSTGRES_USER: dev
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_DB: appdb
+      MYSQL_ROOT_PASSWORD: bankbank
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - db-data:/var/lib/mysql
     networks:
       - dev
 
 volumes:
-  pgdata:
+  db-data:
 
 networks:
   dev:
