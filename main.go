@@ -12,15 +12,13 @@ import (
 var db *sql.DB
 
 func main() {
-	// Capture connection properties.
 	cfg := mysql.NewConfig()
 	cfg.User = os.Getenv("DBUSER")
 	cfg.Passwd = os.Getenv("DBPASS")
 	cfg.Net = "tcp"
-	cfg.Addr = "127.0.0.1:3306"
+	cfg.Addr = "db:3306"
 	cfg.DBName = "recordings"
 
-	// Get a database handle.
 	var err error
 	db, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
