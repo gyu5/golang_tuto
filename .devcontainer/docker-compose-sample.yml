@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces:cached
+    command: sleep infinity
+    depends_on:
+      - db
+    networks:
+      - dev
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: enter-your-password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - dev
+
+volumes:
+  db-data:
+
+networks:
+  dev:
