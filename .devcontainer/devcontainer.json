@@ -2,7 +2,12 @@
   "name": "Go & MySQL",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/workspaces",
-  "forwardPorts": [5432],
-  "postCreateCommand": "go version"
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postCreateCommand": "go version",
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "mounts": [
+    "type=bind,source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent"
+  ]
 }
